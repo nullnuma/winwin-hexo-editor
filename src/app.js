@@ -10,6 +10,7 @@ const log4js = require('log4js')
 const logger = log4js.getLogger('server')
 const authController = require('./auth/controller')
 const authRouter = require('./auth/router')
+const imagemgr = require('./imagemgr/router')
 const settings = require('./settings/router')
 const version = require('./version')
 const { configService } = require('./service/config_service')
@@ -79,9 +80,11 @@ hexoeditorserver(app, {
 })
 
 // routes
+
 app.use(authRouter.routes(), authRouter.allowedMethods())
 app.use(settings.routes(), settings.allowedMethods())
 app.use(version.routes(), version.allowedMethods())
+app.use(imagemgr.routes(), imagemgr.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
