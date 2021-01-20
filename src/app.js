@@ -2,6 +2,7 @@ const Koa = require('koa')
 const app = new Koa()
 const json = require('koa-json')
 const onerror = require('koa-onerror')
+const formidable = require('koa2-formidable');
 const bodyparser = require('koa-bodyparser')
 const koaLogger = require('koa-logger')
 const cors = require('koa-cors')
@@ -45,6 +46,7 @@ app.use(dataServiceErrorHandler)
 app.use(cors())
 
 // middlewares
+app.use(formidable({ multiples: true }))
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 }))
