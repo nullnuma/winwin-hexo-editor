@@ -479,11 +479,10 @@ class Hexo {
     if (!_id) throw new Error('_id is required!')
     logger.info('publish post', _id)
     var doc = await this._get(_id)
-    try {
-      await this.hexo.post.publish({ slug: doc.slug }, true)
-    } catch (err) {
-      this._throwPostNotFound()
-    }
+    var prepost = new Post(doc)
+    prepost.layout = 'post'
+    prepost.published = true
+    await this._update(prepost)
     await this.load()
     const post = this.hexo.locals.get('posts')
       .findOne({ slug: doc.slug })
